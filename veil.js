@@ -1,19 +1,28 @@
-var Veil = (function VeilConstract() {
-    var content = '.veil-content';
-    var defaultArticle = '.veil-article';
+$(document).ready(function() {
+    window.veil = (function() {
+        var content = '.veil-content';
+        var defaultArticle = '.veil-article';
 
-    return function(setting) {
-        var article = setting.article||defaultArticle;
-        var characters = setting.characters;
-        var openLinkText = setting.openLinkText;
-        var closeLinkText = setting.closeLinkText;
+        return function(setting) {
+            var article = setting.article||defaultArticle;
+            var characters = setting.characters;
+            var openLinkText = setting.openLinkText;
+            var closeLinkText = setting.closeLinkText;
 
-        initialization(article, content, characters);
+            initialization(article, content, characters);
 
-        function initialization(article, content, characters) {
-            console.log($(content));
-            console.log($(article, content).length);
+            function initialization(article, content, characters) {
+                var veilBlock = $(content, article);
+                if(veilBlock.length) {
+                    for(var i = 0; veilBlock.length > i; i++) {
+                        if($(veilBlock[i]).html().length > characters) {
+                            veilBlock();
+                        }
+                    }
+                }
+            }
         }
-    }
 
-})();
+    })();
+
+});

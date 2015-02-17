@@ -6,11 +6,12 @@
     <link rel="stylesheet" href="main.css">
     <script src="jquery-1.11.2.min.js"></script>
     <script src="veil.js"></script>
-    <script>
-        Veil({
-            characters: 200,
-            openLinkText: 'Читать полностью',
-            closeLinkText: 'Свернуть'
+    <script type="text/javascript">
+        $(document).ready(function() {
+            veil({
+                characters: 200,
+                openLinkText: 'Читать полностью',
+                closeLinkText: 'Свернуть' })
         });
     </script>
 </head>
