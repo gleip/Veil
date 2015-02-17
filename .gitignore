@@ -1,0 +1,8 @@
+jquery-1.11.2.min.js
+*.png
+*.jpg
+.idea
+./idea/*
+./idea/*.xml
+./idea/*.iml
+./idea/*
