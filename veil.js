@@ -16,7 +16,7 @@ $(document).ready(function() {
                 if(veilBlock.length) {
                     for(var i = 0; veilBlock.length > i; i++) {
                         if($(veilBlock[i]).html().length > characters) {
-                            veilBlock();
+                            veilBlock(11111);
                         }
                     }
                 }
