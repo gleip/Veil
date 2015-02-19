@@ -11,36 +11,58 @@ $(document).ready(function() {
 
             initialization(article, content, characters);
 
-            function initialization(article, content, characters) {
+            function initialization(article, content) {
                 var veilBlock = $(content, article);
                 if(veilBlock.length) {
                     for(var i = 0; veilBlock.length > i; i++) {
-                        if($(veilBlock[i]).text().length > characters) {
-                            veilGo($(veilBlock[i]));
+                        parseHtmlBlock($(veilBlock[i]).html());
                         }
                     }
                 }
-            }
-
-            function veilGo(veilBlock) {
-                var textBlock = veilBlock.text();
-                var htmlBlock = veilBlock.html();
-                parseHtmlBlock(htmlBlock);
-            }
 
             function parseHtmlBlock(htmlBlock) {
                 var htmlArray = [];
                 var textArray = [];
-                var start = 0;
+                var result = "";
+                var startTag = 0, startText = 0;
                 for(var count = 0; htmlBlock.length > count; count++) {
                     if(htmlBlock.slice(count, count+1) === '<') {
-                        start = count;
+                        startTag = count;
+                        console.log($.trim(htmlBlock.slice(startText, count+1)).length);
+                        if($.trim(htmlBlock.slice(startText, count+1)).length) {
+                            textArray.push(htmlBlock.slice(startText, count));
+                        }
                     }
                     if(htmlBlock.slice(count, count+1) === '>') {
-                        htmlArray.push(htmlBlock.slice(start, count+1));
+                        htmlArray.push(htmlBlock.slice(startTag, count+1));
+                        startText = count+1;
                     }
                 }
-                console.log(htmlArray);
+                textArray = setVeil(textArray);
+                for(var i = 0; htmlArray.length > i; i++) {
+
+                }
+                console.log(textArray[0]);
+            }
+
+            function setVeil(textArray) {
+                var count = 0, positionWord = 0;
+                for(var i = 0; textArray.length > i; i++) {
+                    if(textArray[i].length + count < characters) {
+                        count += textArray[i].length;
+                    } else {
+                        positionWord = characters - count;
+                        while(textArray[i].slice(positionWord, positionWord+1) != ' ') {
+                                    positionWord++;
+                        }
+                        textArray[i] = textArray[i].slice(0, positionWord+1) + "<span class='veil'>" + textArray[i].slice(positionWord+1);
+                        break;
+                    }
+                }
+
+                textArray[textArray.length] += "</span>";
+                return textArray;
+
             }
 
             //function getWord(textBlock) {
