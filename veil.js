@@ -90,11 +90,9 @@ $(document).ready(function() {
 
             function openOrClose(e) {
                 if($(e.target).hasClass('veilClose')) {
-                    $(e.target).parent().find('veilClose').removeClass('veilClose').addClass('veilOpen');
-                    e.preventDefault();
+                    console.log(this);
                 } else {
-                    $(e.target).parent().find('veilOpen').removeClass('veilOpen').addClass('veilClose');
-                    e.preventDefault();
+                    console.log(this);
                 }
             }
 
