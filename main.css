@@ -11,6 +11,21 @@ img {
     margin: 0 auto;
 }
 
-.veil {
-    color: red;
+.veilClose {
+    visibility: hidden;
+    display: none;
+}
+
+.veilOpen {
+    visibility: visible;
+    display: block;
+}
+
+h3 {
+    clear: both;
+}
+
+a {
+    float: right;
+    margin-bottom: 40px;
 }
