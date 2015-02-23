@@ -1,7 +1,5 @@
-$(document).ready(function() {
-    window.veil = (function() {
+(function($) {
         var content = '.veil-content';
-        var defaultArticle = '.veil-article';
         var defaultOpenLinkText = 'Открыть';
         var defaultCloseLinkText = 'Закрыть';
         var defaultCloseText = '...';
@@ -18,12 +16,12 @@ $(document).ready(function() {
             close: "</span>"
         };
 
-        return function(setting) {
-            var article = setting.article||defaultArticle;
-            var characters = setting.characters;
-            var openLinkText = setting.openLinkText||defaultOpenLinkText;
-            var closeLinkText = setting.closeLinkText||defaultCloseLinkText;
-            var closeText = setting.closeText||defaultCloseText;
+        return $.prototype.veil = function(setting) {
+            var article = this,
+                characters = setting.characters,
+                openLinkText = setting.openLinkText||defaultOpenLinkText,
+                closeLinkText = setting.closeLinkText||defaultCloseLinkText,
+                closeText = setting.closeText||defaultCloseText;
 
             initialization(article, content, characters);
 
@@ -38,11 +36,11 @@ $(document).ready(function() {
             }
 
             function parseHtmlBlock(htmlBlock) {
-                var htmlArray = [];
-                var textArray = [];
-                var sequence = [];
-                var result = "";
-                var startTag = 0, startText = 0;
+                var htmlArray = [],
+                    textArray = [],
+                    sequence = [],
+                    result = "",
+                    startTag = 0, startText = 0;
                 for(var count = 0; htmlBlock.length > count; count++) {
                     if(htmlBlock.slice(count, count+1) === '<') {
                         startTag = count;
@@ -78,7 +76,7 @@ $(document).ready(function() {
                         while(textArray[i].slice(positionWord, positionWord+1) != ' ') {
                                     positionWord++;
                         }
-                        textArray[i] = $.trim(textArray[i].slice(0, positionWord+1)) + defaultCloseTextTpl.open +closeText +defaultCloseTextTpl.close + defaultVeilTpl.open + textArray[i].slice(positionWord+1);
+                        textArray[i] = $.trim(textArray[i].slice(0, positionWord+1)) + defaultCloseTextTpl.open + closeText + defaultCloseTextTpl.close + defaultVeilTpl.open + textArray[i].slice(positionWord+1);
                         break;
                     }
                 }
@@ -89,11 +87,8 @@ $(document).ready(function() {
             }
 
             function openOrClose(e) {
-                if($(e.target).hasClass('veilClose')) {
-                    console.log(this);
-                } else {
-                    console.log(this);
-                }
+                console.log(this);
+                console.log(e.target);
             }
 
             //function getWord(textBlock) {
@@ -132,6 +127,4 @@ $(document).ready(function() {
 
         }
 
-    })();
-
-});
+    })(jQuery);
