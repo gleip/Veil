@@ -3,33 +3,31 @@
         var defaultOpenLinkText = 'Открыть';
         var defaultCloseLinkText = 'Закрыть';
         var defaultCloseText = '...';
-        var defaultCloseTextTpl = {
-            open: "<span class='dot'>",
-            close: "</span>"
-        };
-        var defaultCloseLinkTpl = {
-            open: "<a class='closeVeil toggleVeil' href='#'>",
-            close: "</a>"
-        };
-        var defaultVeilTpl = {
-            open: "<span class='veilClose'>",
-            close: "</span>"
+
+        var defaultSetting = {
+            'content': '.veil-content',
+            'characters': 200,
+            'openLinkText': 'Открыть',
+            'closeLinkText': 'Закрыть',
+            'closeText': '...'
         };
 
-        return $.prototype.veil = function(setting) {
+        $.fn.veil = function(setting) {
+            var options = $.extend(defaultSetting, setting);
             var article = this,
                 characters = setting.characters,
                 openLinkText = setting.openLinkText||defaultOpenLinkText,
                 closeLinkText = setting.closeLinkText||defaultCloseLinkText,
                 closeText = setting.closeText||defaultCloseText;
 
-            initialization(article, content, characters);
+            return this.each(init(options.content, options.characters));
 
-            function initialization(article, content) {
-                var veilBlock = $(content, article);
+            function init(content, characters) {
+                console.log($(this));
+                var veilBlock = $(content, this);
                 if(veilBlock.length) {
                     for(var i = 0; veilBlock.length > i; i++) {
-                        $(veilBlock[i]).html(parseHtmlBlock($(veilBlock[i]).html()) + defaultCloseLinkTpl.open + openLinkText + defaultCloseLinkTpl.close);
+                        $(veilBlock[i]).html(parseHtmlBlock($(veilBlock[i]).html()) + "<a class='closeVeil toggleVeil' href='#'>" + openLinkText + "</a>");
                     }
                 }
                 $('.toggleVeil').on('click', openOrClose);
@@ -76,19 +74,18 @@
                         while(textArray[i].slice(positionWord, positionWord+1) != ' ') {
                                     positionWord++;
                         }
-                        textArray[i] = $.trim(textArray[i].slice(0, positionWord+1)) + defaultCloseTextTpl.open + closeText + defaultCloseTextTpl.close + defaultVeilTpl.open + textArray[i].slice(positionWord+1);
+                        textArray[i] = $.trim(textArray[i].slice(0, positionWord+1)) + "<span class='dot'>" + closeText + "</span>" + "<span class='veilClose'>" + textArray[i].slice(positionWord+1);
                         break;
                     }
                 }
 
-                textArray[textArray.length-1] = textArray[textArray.length-1] + defaultVeilTpl.close;
+                textArray[textArray.length-1] = textArray[textArray.length-1] + "</span>";
                 return textArray;
 
             }
 
             function openOrClose(e) {
-                console.log(this);
-                console.log(e.target);
+
             }
 
             //function getWord(textBlock) {
