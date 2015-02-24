@@ -11,16 +11,6 @@ img {
     margin: 0 auto;
 }
 
-.veilClose {
-    visibility: hidden;
-    display: none;
-}
-
-.veilOpen {
-    visibility: visible;
-    display: block;
-}
-
 h3 {
     clear: both;
 }
